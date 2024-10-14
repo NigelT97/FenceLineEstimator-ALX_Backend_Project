@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Input Form</title>
+</head>
+<body>
+    <h1>Input Parameters</h1>
+    <form action="{{ url_for('input_form') }}" method="POST">
+        <label for="fence_perimeter"> Fence Perimeter (in meters):</label>
+        <input type="text" id="fence_perimeter" name=" fence_perimeter" required /><br />
+
+        <label for="fence_height"> Fence Height (in meters):</label>
+        <input type="text" id="fence_height" name=" fence_height" required /><br />
+
+        <label for="fence_corners"> Fence Corners:</label>
+        <input type="text" id="fence_corner" name=" fence_corner" required /><br />
+
+        <label for="fence_type"> Select Fence Type:</label>
+        <select id="fence_type" name=" fence_type" required>
+            <option value="diamond mesh">Diamond Mesh</option>
+            <option value="field fence">Field Fence</option>
+            <option value="Barbed wire">Barbed Wire</option>
+            <option value="Welded Mesh">Welded Mesh</option>
+            <option value="anti-climp wire-wall">Anti-Climb Wire-Wall</option>
+        </select><br />
+
+        <label for="fence_wire_thickness"> Select Fence Thickness:</label>
+        <select id="fence_wire_thickness" name=" fence_wire_thickness" required>
+            <option value="L">2mm</option>
+            <option value="M">2.5mm</option>
+            <option value="H">3.15mm</option>
+            <option value="HX">4mm</option>
+        </select><br />
+
+        <label for="fence_appeture"> Select Appeture Type:</label>
+        <select id="fence_appeture" name=" fence_appeture" required>
+            <option value="small">50mm</option>
+            <option value="moderate_small">65mm</option>
+            <option value="standard">75mm</option>
+        </select><br />
+
+        <label for="fence_overhang_request"> Does the fence require have an overhang:</label>
+        <select id="fence_overhang_request" name=" fence_overhang_request" required>
+            <option value="Y">Yes</option>
+            <option value="N">No</option>
+        </select><br />
+
+        <label for="fence_overhang_request"> Does the fence require have an overhang:</label>
+        <select id="fence_overhang_request" name=" fence_overhang_request" required>
+            <option value="Y">Yes</option>
+            <option value="N">No</option>
+        </select><br />
+
+        <label for="fence_overhang_type"> What type of an overhang does it have:</label>
+        <select id="fence_overhang_type" name=" fence_overhang_type" required>
+            <option value="BWL">Barbed wire</option>
+            <option value="FWRW">Flat-wrap Razor Wire</option>
+            <option value="CRW">Concertina Razor Wire</option>
+        </select><br />
+
+        <button type="submit">Calculate Result</button>
+    </form>
+</body>
+</html>
