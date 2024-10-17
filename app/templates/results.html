@@ -3,11 +3,42 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>HomePage</title>
+    <title>Result_Page</title>
 </head>
 <body>
-    <h1>Welcome to the project for ALX backend</h1>
-    <h2>Welcome to Fence Line Estimator</h2>
-    <p>Best solutions for the best fencing line</p>
+    <h1>TOTAL MATERIAL COST AND LABOR</h1>
+
+    {% if fence_result %}
+    <table>
+        <thread>
+            <tr>
+                <th>Material</th>
+                <th>Quantity</th>
+            </tr>
+        </thread>
+        <tbody>
+            {% for material, quantity in fence_result.items() %}
+            <tr>
+                <td>{{ material }}</td>
+                <td>{{ quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No materials available</p>
+    {% endif %}
+
+    <!--Buttons to page actions-->
+    <div class="button-container">
+        <button type="button" onclick="saveResults()">Save</button>
+        <button type="button" onclick="returnInput()">Return to Input</button>
+        <button type="button" onclick="printPage()">Print</button>
+    </div>
+
+    <!--Link to external JavaScript file-->
+    <script src="{{ url_for('static', filename ='js/ResultTab.js') }}"></script>
+
+
 </body>
 </html>

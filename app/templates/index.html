@@ -4,15 +4,32 @@
 <head>
     <meta charset="utf-8" />
     <title>HomePage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/indexsheets.css') }}" />
 </head>
 <body>
-    <h1>Welcome to the project for ALX backend</h1>
-    <h2>Welcome to Fence Line Estimator</h2>
-    <p>Best solutions for the best fencing line</p>
+    <div class="header">
+        <h1>ALX Fencing Project</h1>
+        <nav class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('input_form') }}">Input</a>
+            <a href="#">About</a>
+            <a href="#">Login</a>
+        </nav>
+    </div>
 
-    <!-- Link to the input form page-->
-    <a href="{{ url_for('input_form') }}">
-        <button>Start on Formulating</button>
-    </a>
+    <div class="container">
+        <h1>Welcome to the project for ALX backend Software Engineering</h1>
+        <h2>Name of Project: Fence-Line Estimator</h2>
+        <p>Use this tool to estimate the materials required for your fencing project</p>
+
+        <!-- Link to the input form page-->
+        <a href="{{ url_for('input_form') }}" class="button">Get Started</a>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2024 Fencing Project Under ALX Software Engineering. All Rights Reserved</p>
+    </div>
 </body>
 </html>

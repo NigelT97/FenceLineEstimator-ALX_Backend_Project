@@ -1,0 +1,37 @@
+﻿/* Header Styles */
+.header {
+    background-color: navy;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.nav-links {
+    display: inline-flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links a:not(:first-child) {
+    border-left: 2px solid white;
+    padding-left: 20px;
+}
+
+.nav-links a:hover {
+    color: lightblue;
+    transform: scale(1.2);
+}
