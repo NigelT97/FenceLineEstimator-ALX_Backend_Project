@@ -1,8 +1,16 @@
 # Define Routes and handle Request
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, Flask, flash, session
+import sqlite3
 from app import app
 from app.logic import calculated_estimate
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
+def get_db():
+    conn = sqlite3.connect('app.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 @app.route('/')
 def index():
@@ -45,3 +53,41 @@ def results():
     
     # Render the results page and display the result
     return render_template('results.html', fence_result=fence_result)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        hashed_password = generate_password_hash(password)
+        
+        conn = get_db()
+        try:
+            conn.execute('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', (username, hashed_password, email))
+            conn.commit()
+        except sqlite3.IntegrityError:
+            flash('Username already exists')
+            return redirect(url_for('register'))
+        
+        flash('Registration successful! Please log in.')
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        conn = get_db()
+        
+        user = conn.execute('SELECT * FROM users WHERE username = ?', (username, )).fetchone()
+        
+        if user and check_password_hash(user['password'], password):
+           flash('Successful Login')
+           return redirect(url_for('index'))
+        else:
+            flash('Invalid credenyials')
+            
+    return render_template('index.html')

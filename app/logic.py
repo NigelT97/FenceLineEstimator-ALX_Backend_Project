@@ -26,14 +26,24 @@ def calculated_estimate(fence_perimeter, fence_height, perimeter_corners, fence_
     DescrMaterial = DescriptionRequaired(fence_type, fence_height, fence_wire_thickness, fence_appeture, fence_overhang_request, fence_overhang_type)
     
     # Forming Results
-    ParameterTest = {DescrMaterial[0]: Num_Post,
-                     DescrMaterial[1]: Num_Stay,
-                     DescrMaterial[2]: Num_DVs,
-                     DescrMaterial[3]: Num_Fence,
-                     DescrMaterial[4]: Num_Overhang,
-                     '2.24mm High-Strain Wire 1kg': Num_HighStrain,
-                     '1.6mm Galv Wire 1kg': Num_TyingWire
-                     }
+    if fence_overhang_request == 'Y':
+        ParameterTest = {DescrMaterial[0]: Num_Post,
+                        DescrMaterial[1]: Num_Stay,
+                        DescrMaterial[2]: Num_DVs,
+                        DescrMaterial[3]: Num_Fence,
+                        DescrMaterial[4]: Num_Overhang,
+                        '2.24mm High-Strain Wire 1kg': Num_HighStrain,
+                        '1.6mm Galv Wire 1kg': Num_TyingWire
+                        }
+        
+    elif fence_overhang_request == 'N':
+        ParameterTest = {DescrMaterial[0]: Num_Post,
+                        DescrMaterial[1]: Num_Stay,
+                        DescrMaterial[2]: Num_DVs,
+                        DescrMaterial[3]: Num_Fence,
+                        '2.24mm High-Strain Wire 1kg': Num_HighStrain,
+                        '1.6mm Galv Wire 1kg': Num_TyingWire
+                        }
       
     return ParameterTest
     
@@ -126,6 +136,7 @@ def DescriptionRequaired(fence_type, fence_height, fence_wire_thickness, fence_a
         overhang = '+460mm Overhang'
     else:
         overhang =''
+        DescrOverhang = ''
     
     # Define type and descruption of materials
     if fence_type == 'diamond mesh':

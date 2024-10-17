@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/indexsheets.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loginsheet.css') }}" />
 </head>
 <body>
     <div class="header">
@@ -15,9 +16,28 @@
             <a href="{{ url_for('index') }}">Home</a>
             <a href="{{ url_for('input_form') }}">Input</a>
             <a href="#">About</a>
-            <a href="#">Login</a>
+            <a href="#" id="loginLink">Login</a>
         </nav>
     </div>
+
+    <div class="form">
+        <div class="close">&times;</div>
+        <h2>Login</h2>
+        <form method="POST" action="/login">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required />
+            <br />
+
+            <label for=" password">Password:</label>
+            <input type="password" name="password" required />
+            <br />
+
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="#" id="registerLink">Register here</a></p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/loginscript.js') }}"></script>
 
     <div class="container">
         <h1>Welcome to the project for ALX backend Software Engineering</h1>
