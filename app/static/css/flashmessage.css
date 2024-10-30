@@ -1,0 +1,14 @@
+﻿.flashcontainer {
+    list-style-type: none;
+    padding: 0;
+}
+
+.flashcontainer li {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.flashcontainer .success {
+    background-color: #d4edda;
+}

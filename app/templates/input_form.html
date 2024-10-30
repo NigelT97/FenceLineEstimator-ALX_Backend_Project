@@ -12,16 +12,16 @@
     <div class="header">
         <h1>ALX Fencing Project</h1>
         <nav class="nav-links">
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('input_form') }}">Input</a>
+            <a href="{{ url_for('main_routes.index') }}">Home</a>
+            <a href="{{ url_for('main_routes.input_form') }}">Input</a>
             <a href="#">About</a>
-            <a href="#">Login</a>
+            <a href="#" id="loginLink">Login</a>
         </nav>
     </div>
 
     <div class="container">
         <h1>Enter and Select all revent Fields</h1>
-        <form action="{{ url_for('input_form') }}" method="POST">
+        <form action="{{ url_for('main_routes.input_form') }}" method="POST">
             <div class="form-group">
                 <label for="fence_perimeter"> Fence Perimeter (in meters):</label>
                 <input type="text" id="fence_perimeter" name="fence_perimeter" required /><br />

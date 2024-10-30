@@ -1,0 +1,52 @@
+﻿.result-table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.result-table th, .result-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.result-table th {
+    background-color: navy;
+    color: white;
+}
+
+.table-content {
+    display: flex;
+    justify-content: center;
+}
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+button, return-button {
+    padding: 10px 15px;
+    border: none;
+    background-color: navy;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 10px;
+}
+
+button:hover, return-button:hover {
+    background-color: darkblue;
+}
+
+.customer-details {
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.customer-details p {
+    margin: 5px 0;
+}

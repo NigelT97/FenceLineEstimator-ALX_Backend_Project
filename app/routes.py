@@ -1,22 +1,24 @@
 # Define Routes and handle Request
 
-from flask import render_template, request, redirect, url_for, Flask, flash, session
+from flask import render_template, request, redirect, url_for, Flask, flash, session, Blueprint
 import sqlite3
-from app import app
 from app.logic import calculated_estimate
 from werkzeug.security import generate_password_hash, check_password_hash
+from models import get_db
+from datetime import datetime
+import random
 
 
-def get_db():
-    conn = sqlite3.connect('app.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+main_route = Blueprint('main_routes', __name__)
 
-@app.route('/')
+@main_route.route('/')
 def index():
-    return render_template('index.html')
+    user = session.get('user')
+    
+    flash("Login Successful!", "success")
+    return render_template('index.html', user=user)
 
-@app.route('/input', methods=['GET', 'POST'])
+@main_route.route('/input', methods=['GET', 'POST'])
 def input_form():
     if request.method == 'POST':
         # Get user Input
@@ -46,15 +48,15 @@ def input_form():
         return render_template('results.html', fence_result=fence_result)
     return render_template('input_form.html')
 
-@app.route('/results')
+@main_route.route('/results')
 def results():
     # Get the result from the query parameters
     fence_result = request.args.get('fence_result')
-    
+   
     # Render the results page and display the result
-    return render_template('results.html', fence_result=fence_result)
+    return render_template('results.html',customer_name, quote_number, date_time=date_time, fence_result=fence_result)
 
-@app.route('/register', methods=['GET', 'POST'])
+@main_route.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
@@ -68,13 +70,13 @@ def register():
             conn.commit()
         except sqlite3.IntegrityError:
             flash('Username already exists')
-            return redirect(url_for('register'))
+            return redirect(url_for('main_routes.register'))
         
         flash('Registration successful! Please log in.')
-        return redirect(url_for('login'))
+        return redirect(url_for('main_routes.login'))
     return render_template('register.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+@main_route.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
@@ -85,9 +87,9 @@ def login():
         user = conn.execute('SELECT * FROM users WHERE username = ?', (username, )).fetchone()
         
         if user and check_password_hash(user['password'], password):
-           flash('Successful Login')
-           return redirect(url_for('index'))
+           session['user'] = {'username': username}
+           return redirect(url_for('main_routes.index'))
         else:
-            flash('Invalid credenyials')
+            flash('Invalid credentials')
             
     return render_template('index.html')

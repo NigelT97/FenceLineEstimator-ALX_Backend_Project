@@ -4,27 +4,37 @@
 <head>
     <meta charset="utf-8" />
     <title>Result_Page</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/resultpage.css') }}" />
 </head>
 <body>
-    <h1>TOTAL MATERIAL COST AND LABOR</h1>
+
+    <h1>Fence-Line Estimator: Material and labour cost</h1>
+    <div class="customer-details">
+        <p><strong>Customer:</strong> {{ customer_name }}</p>
+        <p><strong>Quote Number:</strong> {{ quote_number }} </p>
+        <p><strong>Date & Time:</strong> {{ date_time }} </p>
+    </div>
 
     {% if fence_result %}
-    <table>
-        <thread>
-            <tr>
-                <th>Material</th>
-                <th>Quantity</th>
-            </tr>
-        </thread>
-        <tbody>
-            {% for material, quantity in fence_result.items() %}
-            <tr>
-                <td>{{ material }}</td>
-                <td>{{ quantity }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-content">
+        <table class="result-table">
+            <thread>
+                <tr>
+                    <th>Material</th>
+                    <th>Quantity</th>
+                </tr>
+            </thread>
+            <tbody>
+                {% for material, quantity in fence_result.items() %}
+                <tr>
+                    <td>{{ material }}</td>
+                    <td>{{ quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
     <p>No materials available</p>
     {% endif %}

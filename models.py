@@ -1,12 +1,14 @@
 import sqlite3
+from config import DATABASE_PATH
 
 def get_db():
-    conn = sqlite3.connect('app.db')
+    conn = sqlite3.connect(DATABASE_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
 def create_user_table():
     conn = get_db()
+    cursor = conn.cursor()
     conn.execute('''
                  CREATE TABLE IF NOT EXISTS users (
                  id INTEGER PRIMARY KEY AUTOINCREMENT,
