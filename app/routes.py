@@ -2,7 +2,7 @@
 
 from flask import render_template, request, redirect, url_for, Flask, flash, session, Blueprint
 import sqlite3
-from app.logic import calculated_estimate
+from app.logic import calculated_estimate, cost_calculator
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import get_db
 from datetime import datetime
@@ -43,9 +43,20 @@ def input_form():
         
         # Perform Calculations
         fence_result = calculated_estimate(fence_perimeter, fence_height, perimeter_corners, fence_type,fence_wire_thickness, fence_appeture, fence_overhang_request, fence_overhang_type)
+        fence_description = list(fence_result.keys())
+        fence_description_value = fence_description[3]
+        
+        # Perform Cost Calculations
+        cost_value = cost_calculator(fence_perimeter, fence_height, fence_type, fence_overhang_request, fence_appeture, fence_wire_thickness)
+        
+        # Customer Details
+        customer_name = session.get('user', 'Guest')
+        randomnumber = random.randint(100000, 999999)
+        quote_number = f"QT{randomnumber}test"
+        date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
         # Redirect to the results page, passing the result
-        return render_template('results.html', fence_result=fence_result)
+        return render_template('results.html', fence_result=fence_result, cost_value=cost_value, fence_description_value=fence_description_value, fence_perimeter=fence_perimeter, customer_name=customer_name, quote_number=quote_number, date_time=date_time)
     return render_template('input_form.html')
 
 @main_route.route('/results')
@@ -54,7 +65,7 @@ def results():
     fence_result = request.args.get('fence_result')
    
     # Render the results page and display the result
-    return render_template('results.html',customer_name, quote_number, date_time=date_time, fence_result=fence_result)
+    return render_template('results.html', fence_result=fence_result)
 
 @main_route.route('/register', methods=['GET', 'POST'])
 def register():

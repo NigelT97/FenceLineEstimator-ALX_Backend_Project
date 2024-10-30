@@ -1,4 +1,6 @@
 # Logic for fencing calculations
+import sqlite3
+from config import DATABASE_PATH
 
 def calculated_estimate(fence_perimeter, fence_height, perimeter_corners, fence_type,fence_wire_thickness, fence_appeture, fence_overhang_request, fence_overhang_type):
     # Get Parameters of the fence type
@@ -192,3 +194,137 @@ def OverhangCalc(fence_overhang_type, fence_perimeter):
         
     return quantity
 
+def cost_calculator(fence_perimeter, fence_height, fence_type, fence_overhang_request, fence_appeture, fence_thickness):
+    cost = 0
+    code_fence = ''
+    if fence_type == 'diamond mesh':
+        if fence_height == 'H09':
+            if fence_appeture == 'small':
+                if fence_thickness == 'L':
+                    code_fence = 'DM0950L30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM0950M30'
+                else:
+                    code_fence = 'DM0950HX30'
+            else:
+                if fence_thickness == 'L':
+                    code_fence = 'DM0975l30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM0975M30'
+                else:
+                    code_fence = 'DM0975HX30'
+        elif fence_height == 'H12':
+            if fence_appeture == 'small':
+                if fence_thickness == 'L':
+                    code_fence = 'DM1250l30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM1250M30'
+                else:
+                    code_fence = 'DM1250HX30'
+            else:
+                if fence_thickness == 'L':
+                    code_fence = 'DM1275l30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM1275M30'
+                else:
+                    code_fence = 'DM1275HX30'
+                    
+        elif fence_height == 'H15':
+            if fence_appeture == 'small':
+                if fence_thickness == 'L':
+                    code_fence = 'DM1550l30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM1550M30'
+                else:
+                    code_fence = 'DM1550HX30'
+            else:
+                if fence_thickness == 'L':
+                    code_fence = 'DM1575l30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM1575M30'
+                else:
+                    code_fence = 'DM1575HX30'
+        elif fence_height == 'H18':
+            if fence_appeture == 'small':
+                if fence_thickness == 'L':
+                    code_fence = 'DM1850L30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM1850M30'
+                else:
+                    code_fence = 'DM1850HX30'
+            else:
+                if fence_thickness == 'L':
+                    code_fence = 'DM1875L30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM1875M30'
+                else:
+                    code_fence = 'DM1875HX30'
+        elif fence_height == 'H21':
+            if fence_appeture == 'small':
+                if fence_thickness == 'L':
+                    code_fence = 'DM2150l30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM2150M30'
+                else:
+                    code_fence = 'DM2150HX30'
+            else:
+                if fence_thickness == 'L':
+                    code_fence = 'DM2175l30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM2175M30'
+                else:
+                    code_fence = 'DM2175HX30'
+        elif fence_height == 'H24':
+            if fence_appeture == 'small':
+                if fence_thickness == 'L':
+                    code_fence = 'DM2450l30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM2450M30'
+                else:
+                    code_fence = 'DM2450HX30'
+            else:
+                if fence_thickness == 'L':
+                    code_fence = 'DM2475l30'
+                elif fence_thickness == 'M':
+                    code_fence = 'DM2475M30'
+                else:
+                    code_fence = 'DM2475HX30'
+
+    if fence_type == 'field fence':
+       cost = 3.12 
+
+    if fence_type == 'Barbed wire':
+        cost = 0.28
+    
+    if fence_type == 'Welded Mesh':
+        cost = 6.90
+        
+    if fence_type == 'anti-climb wire-wall':
+        cost = 12.90
+
+    if code_fence != '':
+        cost = 1
+        cost = retrieve_cost_value(code_fence)
+        
+    labour_and_material_cost = cost * float(fence_perimeter)
+    
+    return labour_and_material_cost
+ 
+def retrieve_cost_value(code_fence):
+    conn = sqlite3.connect('app.db')
+    cursor = conn.cursor()
+    
+    query_code = "SELECT COST FROM CostTable WHERE FenceCode = ?"
+                   
+    cursor.execute(query_code, (code_fence,))
+    
+    cost_value = cursor.fetchone()
+    
+    if cost_value is None:
+        cost_value = -34.9
+        if code_fence == 'DM0950L30':
+            cost_value = -1000
+        conn.close()
+        return cost_value
+    conn.close()
+    return cost_value[0]

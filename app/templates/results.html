@@ -11,7 +11,7 @@
 
     <h1>Fence-Line Estimator: Material and labour cost</h1>
     <div class="customer-details">
-        <p><strong>Customer:</strong> {{ customer_name }}</p>
+        <p><strong>Customer:</strong> {{ customer_name.username }}</p>
         <p><strong>Quote Number:</strong> {{ quote_number }} </p>
         <p><strong>Date & Time:</strong> {{ date_time }} </p>
     </div>
@@ -38,6 +38,12 @@
     {% else %}
     <p>No materials available</p>
     {% endif %}
+
+    <!--Description of cost and labour-->
+    <h2>Description</h2>
+    <p>The total cost to supply the above materials and install <strong>{{fence_perimeter}}m</strong> of <strong>{{fence_description_value}}</strong> inclusive of conrete required </p>
+    <p class="cost_value">US${{cost_value}}</p>
+    <p><strong><i>Note: Transport and accomodation not included </i></strong></p>
 
     <!--Buttons to page actions-->
     <div class="button-container">

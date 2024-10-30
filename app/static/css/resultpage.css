@@ -43,10 +43,14 @@ button:hover, return-button:hover {
 .customer-details {
     margin-bottom: 20px;
     text-align: center;
-    font-weight: bold;
     color: #333;
 }
 
 .customer-details p {
     margin: 5px 0;
+}
+
+.cost_value {
+    text-align: center;
+    font: bold;
 }
